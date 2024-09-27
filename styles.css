@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Guidance System Demo</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #hero {
+            text-align: center;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 4rem 2rem;
+        }
+
+        #hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #c0392b;
+        }
+
+        #features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature h3 {
+            color: var(--primary-color);
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .results-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f0f8ff;
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+
+        #debug-info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>AI Career Guidance</h1>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#assessment">Assessment</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <h2>Your Personalized Career Path Starts Here</h2>
+        <p>Find your ideal career path by exploring your aptitudes, skills, and aspirations.</p>
+        <a href="#assessment" class="cta-button">Get Started</a>
+    </section>
+
+    <section id="features">
+        <div class="feature">
+            <h3>Aptitude Assessment</h3>
+            <p>Take our AI-powered aptitude test to discover your strengths and potential career paths.</p>
+        </div>
+        <div class="feature">
+            <h3>Skill & Experience Mapping</h3>
+            <p>Analyze your current skills and experiences, and match them with future career opportunities.</p>
+        </div>
+        <div class="feature">
+            <h3>Personalized Recommendations</h3>
+            <p>Receive tailored career suggestions based on your profile and labor market trends.</p>
+        </div>
+        <div class="feature">
+            <h3>Learning and Growth Paths</h3>
+            <p>Identify skill gaps and receive personalized learning suggestions to advance your career.</p>
+        </div>
+    </section>
+
+    <section id="assessment">
+        <h2>Start Your Career Assessment</h2>
+        <p>Complete the quick aptitude and skills test to receive your personalized career recommendations.</p>
+        <form id="careerForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="aptitude">Aptitude Test:</label>
+            <select id="aptitude" name="aptitude" required>
+                <option value="">--Select your aptitude--</option>
+                <option value="creative">Creative</option>
+                <option value="analytical">Analytical</option>
+                <option value="technical">Technical</option>
+                <option value="managerial">Managerial</option>
+            </select>
+
+            <label for="experience">Work Experience (in years):</label>
+            <input type="number" id="experience" name="experience" placeholder="Years of experience" min="0" required>
+
+            <label for="skills">Key Skills:</label>
+            <textarea id="skills" name="skills" placeholder="List your key skills (e.g. programming, communication, etc.)" required></textarea>
+
+            <button type="submit" class="cta-button">Get Career Suggestions</button>
+        </form>
+        <div id="results" class="results-container" style="display: none;">
+            <!-- Results will appear here -->
+        </div>
+        <div id="debug-info"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 AI Career Guidance. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Debug function to display information
+        function debugInfo(message) {
+            const debugElement = document.getElementById('debug-info');
+            debugElement.innerHTML += `<p>${message}</p>`;
+        }
+
+        // Listen for form submission
+        document.getElementById('careerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from refreshing the page
+            
+            debugInfo('Form submitted');
+          
+            // Get user inputs
+            const name = document.getElementById('name').value;
+            const aptitude = document.getElementById('aptitude').value;
+            const experience = parseInt(document.getElementById('experience').value);
+            const skills = document.getElementById('skills').value.toLowerCase().split(',').map(skill => skill.trim());
+          
+            debugInfo(`Inputs - Name: ${name}, Aptitude: ${aptitude}, Experience: ${experience}, Skills: ${skills.join(', ')}`);
+
+            // Create a variable to store the final recommendation message
+            let recommendation = `Hi ${name}, based on your aptitude for ${aptitude} and ${experience} years of experience, we recommend the following career paths: `;
+          
+            // Initialize an array to hold suggested careers
+            let suggestedCareers = [];
+          
+            // Recommendation logic based on user's aptitude
+            if (aptitude === 'creative') {
+                suggestedCareers.push('Graphic Designer', 'Marketing Specialist', 'Content Creator');
+          
+                // Additional logic based on skills for creative aptitude
+                if (skills.includes('writing')) {
+                    suggestedCareers.push('Copywriter');
+                }
+                if (skills.includes('social media')) {
+                    suggestedCareers.push('Social Media Manager');
+                }
+            } else if (aptitude === 'analytical') {
+                suggestedCareers.push('Data Analyst', 'Financial Analyst', 'Business Intelligence Analyst');
+          
+                // Additional logic based on skills for analytical aptitude
+                if (skills.includes('math') || skills.includes('excel')) {
+                    suggestedCareers.push('Statistical Analyst');
+                }
+            } else if (aptitude === 'technical') {
+                suggestedCareers.push('Software Developer', 'Network Engineer', 'IT Consultant');
+          
+                // Additional logic based on skills for technical aptitude
+                if (skills.includes('programming') || skills.includes('coding')) {
+                    suggestedCareers.push('Full-Stack Developer', 'AI Engineer');
+                }
+            } else if (aptitude === 'managerial') {
+                suggestedCareers.push('Project Manager', 'Operations Manager', 'HR Manager');
+          
+                // Additional logic based on skills for managerial aptitude
+                if (skills.includes('leadership')) {
+                    suggestedCareers.push('Executive Leadership Roles');
+                }
+            }
+          
+            debugInfo(`Suggested Careers: ${suggestedCareers.join(', ')}`);
+
+            // Modify recommendations based on experience
+            if (experience < 2) {
+                recommendation += `You may start as a Junior or Entry-level in roles such as ${suggestedCareers.slice(0, 2).join(', ')}.`;
+            } else if (experience >= 2 && experience < 5) {
+                recommendation += `You are well-suited for Mid-level positions such as ${suggestedCareers.slice(0, 3).join(', ')}.`;
+            } else {
+                recommendation += `You could explore Senior or Leadership roles like ${suggestedCareers.join(', ')}.`;
+            }
+          
+            debugInfo(`Final Recommendation: ${recommendation}`);
+
+            // Display the recommendation in the results section
+            const resultsElement = document.getElementById('results');
+            resultsElement.innerHTML = `<p>${recommendation}</p>`;
+            resultsElement.style.display = 'block'; // Ensure the results are visible
+
+            debugInfo('Results displayed');
+        });
+    </script>
+</body>
+</html>
