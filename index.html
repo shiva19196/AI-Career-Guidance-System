@@ -151,6 +151,20 @@
             border-radius: 8px;
         }
 
+        .roadmap-step {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #3498db;
+            border-radius: 5px;
+        }
+
         footer {
             background-color: var(--secondary-color);
             color: white;
@@ -233,6 +247,60 @@
         <div id="results" class="results-container" style="display: none;">
             <!-- Results will appear here -->
         </div>
+        <section id="roadmap" style="display: none; margin-top: 2rem;">
+            <!-- Roadmap Step 1 -->
+            <div class="roadmap-step">
+                <h4>Master Essential Skills</h4>
+                <p>Suggested roles: ${suggestedCareers.slice(0, 2).join(', ')}</p>
+                <div class="progress-bar" style="width: 80%;"></div>
+            </div>
+            <!-- Arrow -->
+            <div style="text-align: center; margin: 10px 0;">&#8595; <!-- Downward arrow --></div>
+        
+            <!-- Roadmap Step 2 -->
+            <div class="roadmap-step">
+                <h4>Gain Work Experience</h4>
+                <p>Experience needed: ${experience} years</p>
+                <div class="progress-bar" style="width: ${experience < 2 ? '30%' : experience < 5 ? '60%' : '90%'};"></div>
+            </div>
+            <!-- Arrow -->
+            <div style="text-align: center; margin: 10px 0;">&#8595; <!-- Downward arrow --></div>
+        
+            <!-- Roadmap Step 3 -->
+            <div class="roadmap-step">
+                <h4>Build a Portfolio</h4>
+                <p>Create projects or case studies based on your skills.</p>
+                <div class="progress-bar" style="width: 70%;"></div>
+            </div>
+            <!-- Arrow -->
+            <div style="text-align: center; margin: 10px 0;">&#8595; <!-- Downward arrow --></div>
+        
+            <!-- Roadmap Step 4 -->
+            <div class="roadmap-step">
+                <h4>Expand Your Network</h4>
+                <p>Join industry events and connect with professionals.</p>
+                <div class="progress-bar" style="width: 50%;"></div>
+            </div>
+            <!-- Arrow -->
+            <div style="text-align: center; margin: 10px 0;">&#8595; <!-- Downward arrow --></div>
+        
+            <!-- Roadmap Step 5 -->
+            <div class="roadmap-step">
+                <h4>Explore Leadership Opportunities</h4>
+                <p>Suggested roles: ${experience >= 5 ? suggestedCareers.slice(-2).join(', ') : 'Focus on growth'}</p>
+                <div class="progress-bar" style="width: ${experience >= 5 ? '90%' : '40%'};"></div>
+            </div>
+            <!-- Arrow -->
+            <div style="text-align: center; margin: 10px 0;">&#8595; <!-- Downward arrow --></div>
+        
+            <!-- Goal Reached Step -->
+            <div class="roadmap-step" style="background-color: #e0ffe0;">
+                <h4>Congratulations!</h4>
+                <p>You have reached your goal! &#127942; <!-- Trophy icon --></p>
+                <div class="progress-bar" style="width: 100%;"></div>
+            </div>
+        </section>
+        
         <div id="debug-info"></div>
     </section>
 
@@ -241,18 +309,14 @@
     </footer>
 
     <script>
-        // Debug function to display information
         function debugInfo(message) {
             const debugElement = document.getElementById('debug-info');
             debugElement.innerHTML += `<p>${message}</p>`;
         }
 
-        // Listen for form submission
         document.getElementById('careerForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form from refreshing the page
             
-            debugInfo('Form submitted');
-          
             // Get user inputs
             const name = document.getElementById('name').value;
             const aptitude = document.getElementById('aptitude').value;
@@ -261,46 +325,26 @@
           
             debugInfo(`Inputs - Name: ${name}, Aptitude: ${aptitude}, Experience: ${experience}, Skills: ${skills.join(', ')}`);
 
-            // Create a variable to store the final recommendation message
+            // Create career recommendation logic
             let recommendation = `Hi ${name}, based on your aptitude for ${aptitude} and ${experience} years of experience, we recommend the following career paths: `;
-          
-            // Initialize an array to hold suggested careers
             let suggestedCareers = [];
-          
-            // Recommendation logic based on user's aptitude
+
+            // Aptitude-based career suggestions
             if (aptitude === 'creative') {
                 suggestedCareers.push('Graphic Designer', 'Marketing Specialist', 'Content Creator');
-          
-                // Additional logic based on skills for creative aptitude
-                if (skills.includes('writing')) {
-                    suggestedCareers.push('Copywriter');
-                }
-                if (skills.includes('social media')) {
-                    suggestedCareers.push('Social Media Manager');
-                }
+                if (skills.includes('writing')) suggestedCareers.push('Copywriter');
+                if (skills.includes('social media')) suggestedCareers.push('Social Media Manager');
             } else if (aptitude === 'analytical') {
                 suggestedCareers.push('Data Analyst', 'Financial Analyst', 'Business Intelligence Analyst');
-          
-                // Additional logic based on skills for analytical aptitude
-                if (skills.includes('math') || skills.includes('excel')) {
-                    suggestedCareers.push('Statistical Analyst');
-                }
+                if (skills.includes('math') || skills.includes('excel')) suggestedCareers.push('Statistical Analyst');
             } else if (aptitude === 'technical') {
                 suggestedCareers.push('Software Developer', 'Network Engineer', 'IT Consultant');
-          
-                // Additional logic based on skills for technical aptitude
-                if (skills.includes('programming') || skills.includes('coding')) {
-                    suggestedCareers.push('Full-Stack Developer', 'AI Engineer');
-                }
+                if (skills.includes('programming')) suggestedCareers.push('Full-Stack Developer', 'AI Engineer');
             } else if (aptitude === 'managerial') {
                 suggestedCareers.push('Project Manager', 'Operations Manager', 'HR Manager');
-          
-                // Additional logic based on skills for managerial aptitude
-                if (skills.includes('leadership')) {
-                    suggestedCareers.push('Executive Leadership Roles');
-                }
+                if (skills.includes('leadership')) suggestedCareers.push('Executive Leadership Roles');
             }
-          
+
             debugInfo(`Suggested Careers: ${suggestedCareers.join(', ')}`);
 
             // Modify recommendations based on experience
@@ -311,15 +355,44 @@
             } else {
                 recommendation += `You could explore Senior or Leadership roles like ${suggestedCareers.join(', ')}.`;
             }
-          
-            debugInfo(`Final Recommendation: ${recommendation}`);
 
             // Display the recommendation in the results section
             const resultsElement = document.getElementById('results');
             resultsElement.innerHTML = `<p>${recommendation}</p>`;
             resultsElement.style.display = 'block'; // Ensure the results are visible
-
-            debugInfo('Results displayed');
+          
+            // Generate a roadmap dynamically based on the recommendation
+            const roadmapElement = document.getElementById('roadmap');
+            roadmapElement.innerHTML = `
+                <div class="roadmap-step">
+                    <h4>Master Essential Skills</h4>
+                    <p>Suggested roles: ${suggestedCareers.slice(0, 2).join(', ')}</p>
+                    <div class="progress-bar" style="width: 80%;"></div>
+                </div>
+                <div class="roadmap-step">
+                    <h4>Gain Work Experience</h4>
+                    <p>Experience needed: ${experience} years</p>
+                    <div class="progress-bar" style="width: ${experience < 2 ? '30%' : experience < 5 ? '60%' : '90%'};"></div>
+                </div>
+                <div class="roadmap-step">
+                    <h4>Build a Portfolio</h4>
+                    <p>Create projects or case studies based on your skills.</p>
+                    <div class="progress-bar" style="width: 70%;"></div>
+                </div>
+                <div class="roadmap-step">
+                    <h4>Expand Your Network</h4>
+                    <p>Join industry events and connect with professionals.</p>
+                    <div class="progress-bar" style="width: 50%;"></div>
+                </div>
+                <div class="roadmap-step">
+                    <h4>Explore Leadership Opportunities</h4>
+                    <p>Suggested roles: ${experience >= 5 ? suggestedCareers.slice(-2).join(', ') : 'Focus on growth'}</p>
+                    <div class="progress-bar" style="width: ${experience >= 5 ? '90%' : '40%'};"></div>
+                </div>
+            `;
+            roadmapElement.style.display = 'block';
+          
+            debugInfo('Roadmap displayed');
         });
     </script>
 </body>
