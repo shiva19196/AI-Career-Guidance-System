@@ -309,93 +309,94 @@
     <footer>
         <p>&copy; 2024 AI Career Guidance. All Rights Reserved.</p>
     </footer>
-
-    <script>
-        function debugInfo(message) {
-            const debugElement = document.getElementById('debug-info');
+<script>
+    function debugInfo(message) {
+        const debugElement = document.getElementById('debug-info');
+        if (debugElement) {
             debugElement.innerHTML += `<p>${message}</p>`;
         }
+    }
 
-        document.getElementById('careerForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form from refreshing the page
-            
-            // Get user inputs
-            const name = document.getElementById('name').value;
-            const aptitude = document.getElementById('aptitude').value;
-            const experience = parseInt(document.getElementById('experience').value);
-            const skills = document.getElementById('skills').value.toLowerCase().split(',').map(skill => skill.trim());
-          
-            debugInfo(`Inputs - Name: ${name}, Aptitude: ${aptitude}, Experience: ${experience}, Skills: ${skills.join(', ')}`);
+    document.getElementById('careerForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form from refreshing the page
 
-            // Create career recommendation logic
-            let recommendation = `Hi ${name}, based on your aptitude for ${aptitude} and ${experience} years of experience, we recommend the following career paths: `;
-            let suggestedCareers = [];
+        // Get user inputs
+        const name = document.getElementById('name').value;
+        const aptitude = document.getElementById('aptitude').value;
+        const experience = parseInt(document.getElementById('experience').value);
+        const skills = document.getElementById('skills').value.toLowerCase().split(',').map(skill => skill.trim());
 
-            // Aptitude-based career suggestions
-            if (aptitude === 'creative') {
-                suggestedCareers.push('Graphic Designer', 'Marketing Specialist', 'Content Creator');
-                if (skills.includes('writing')) suggestedCareers.push('Copywriter');
-                if (skills.includes('social media')) suggestedCareers.push('Social Media Manager');
-            } else if (aptitude === 'analytical') {
-                suggestedCareers.push('Data Analyst', 'Financial Analyst', 'Business Intelligence Analyst');
-                if (skills.includes('math') || skills.includes('excel')) suggestedCareers.push('Statistical Analyst');
-            } else if (aptitude === 'technical') {
-                suggestedCareers.push('Software Developer', 'Network Engineer', 'IT Consultant');
-                if (skills.includes('programming')) suggestedCareers.push('Full-Stack Developer', 'AI Engineer');
-            } else if (aptitude === 'managerial') {
-                suggestedCareers.push('Project Manager', 'Operations Manager', 'HR Manager');
-                if (skills.includes('leadership')) suggestedCareers.push('Executive Leadership Roles');
-            }
+        debugInfo(`Inputs - Name: ${name}, Aptitude: ${aptitude}, Experience: ${experience}, Skills: ${skills.join(', ')}`);
 
-            debugInfo(`Suggested Careers: ${suggestedCareers.join(', ')}`);
+        let recommendation = `Hi ${name}, based on your aptitude for ${aptitude} and ${experience} years of experience, we recommend the following career paths: `;
+        let suggestedCareers = [];
 
-            // Modify recommendations based on experience
-            if (experience < 2) {
-                recommendation += `You may start as a Junior or Entry-level in roles such as ${suggestedCareers.slice(0, 2).join(', ')}.`;
-            } else if (experience >= 2 && experience < 5) {
-                recommendation += `You are well-suited for Mid-level positions such as ${suggestedCareers.slice(0, 3).join(', ')}.`;
-            } else {
-                recommendation += `You could explore Senior or Leadership roles like ${suggestedCareers.join(', ')}.`;
-            }
+        // Aptitude-based career suggestions
+        if (aptitude === 'creative') {
+            suggestedCareers = ['Graphic Designer', 'Marketing Specialist', 'Content Creator'];
+            if (skills.includes('writing')) suggestedCareers.push('Copywriter');
+            if (skills.includes('social media')) suggestedCareers.push('Social Media Manager');
+        } else if (aptitude === 'analytical') {
+            suggestedCareers = ['Data Analyst', 'Financial Analyst', 'Business Intelligence Analyst'];
+            if (skills.includes('math') || skills.includes('excel')) suggestedCareers.push('Statistical Analyst');
+        } else if (aptitude === 'technical') {
+            suggestedCareers = ['Software Developer', 'Network Engineer', 'IT Consultant'];
+            if (skills.includes('programming')) suggestedCareers.push('Full-Stack Developer', 'AI Engineer');
+        } else if (aptitude === 'managerial') {
+            suggestedCareers = ['Project Manager', 'Operations Manager', 'HR Manager'];
+            if (skills.includes('leadership')) suggestedCareers.push('Executive Leadership Roles');
+        }
 
-            // Display the recommendation in the results section
-            const resultsElement = document.getElementById('results');
-            resultsElement.innerHTML = `<p>hello${recommendation}</p>`;
-            resultsElement.style.display = 'block'; // Ensure the results are visible
-          
-            // Generate a roadmap dynamically based on the recommendation
-            const roadmapElement = document.getElementById('roadmap');
-            roadmapElement.innerHTML = `
-                <div class="roadmap-step">
-                    <h4>Master Essential Skills</h4>
-                    <p>Suggested roles: ${suggestedCareers.slice(0, 2).join(', ')}</p>
-                    <div class="progress-bar" style="width: 80%;"></div>
-                </div>
-                <div class="roadmap-step">
-                    <h4>Gain Work Experience</h4>
-                    <p>Experience needed: ${experience} years</p>
-                    <div class="progress-bar" style="width: ${experience < 2 ? '30%' : experience < 5 ? '60%' : '90%'};"></div>
-                </div>
-                <div class="roadmap-step">
-                    <h4>Build a Portfolio</h4>
-                    <p>Create projects or case studies based on your skills.</p>
-                    <div class="progress-bar" style="width: 70%;"></div>
-                </div>
-                <div class="roadmap-step">
-                    <h4>Expand Your Network</h4>
-                    <p>Join industry events and connect with professionals.</p>
-                    <div class="progress-bar" style="width: 50%;"></div>
-                </div>
-                <div class="roadmap-step">
-                    <h4>Explore Leadership Opportunities</h4>
-                    <p>Suggested roles: ${experience >= 5 ? suggestedCareers.slice(-2).join(', ') : 'Focus on growth'}</p>
-                    <div class="progress-bar" style="width: ${experience >= 5 ? '90%' : '40%'};"></div>
-                </div>
-            `;
-            roadmapElement.style.display = 'block';
-          
-            debugInfo('Roadmap displayed');
-        });
-    </script>
+        debugInfo(`Suggested Careers: ${suggestedCareers.join(', ')}`);
+
+        if (suggestedCareers.length === 0) {
+            recommendation += "Unfortunately, we couldn't find a clear match. Consider exploring different career options.";
+        } else if (experience < 2) {
+            recommendation += `You may start as a Junior or Entry-level in roles such as ${suggestedCareers.slice(0, Math.min(2, suggestedCareers.length)).join(', ')}.`;
+        } else if (experience >= 2 && experience < 5) {
+            recommendation += `You are well-suited for Mid-level positions such as ${suggestedCareers.slice(0, Math.min(3, suggestedCareers.length)).join(', ')}.`;
+        } else {
+            recommendation += `You could explore Senior or Leadership roles like ${suggestedCareers.join(', ')}.`;
+        }
+
+        // Display the recommendation in the results section
+        const resultsElement = document.getElementById('results');
+        resultsElement.innerHTML = `<p>${recommendation}</p>`;
+        resultsElement.style.display = 'block';
+
+        // Generate a roadmap dynamically
+        const roadmapElement = document.getElementById('roadmap');
+        roadmapElement.innerHTML = `
+            <div class="roadmap-step">
+                <h4>Master Essential Skills</h4>
+                <p>Suggested roles: ${suggestedCareers.slice(0, Math.min(2, suggestedCareers.length)).join(', ')}</p>
+                <div class="progress-bar" style="width: 80%;"></div>
+            </div>
+            <div class="roadmap-step">
+                <h4>Gain Work Experience</h4>
+                <p>Experience needed: ${experience} years</p>
+                <div class="progress-bar" style="width: ${experience < 2 ? '30%' : experience < 5 ? '60%' : '90%'};"></div>
+            </div>
+            <div class="roadmap-step">
+                <h4>Build a Portfolio</h4>
+                <p>Create projects or case studies based on your skills.</p>
+                <div class="progress-bar" style="width: 70%;"></div>
+            </div>
+            <div class="roadmap-step">
+                <h4>Expand Your Network</h4>
+                <p>Join industry events and connect with professionals.</p>
+                <div class="progress-bar" style="width: 50%;"></div>
+            </div>
+            <div class="roadmap-step">
+                <h4>Explore Leadership Opportunities</h4>
+                <p>Suggested roles: ${experience >= 5 && suggestedCareers.length > 2 ? suggestedCareers.slice(-2).join(', ') : 'Focus on growth'}</p>
+                <div class="progress-bar" style="width: ${experience >= 5 ? '90%' : '40%'};"></div>
+            </div>
+        `;
+        roadmapElement.style.display = 'block';
+
+        debugInfo('Roadmap displayed');
+    });
+</script>
 </body>
 </html>
